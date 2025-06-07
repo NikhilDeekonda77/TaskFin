@@ -25,7 +25,7 @@ class OrchestratorAgent(BaseAgent):
         )
         self.llm = ChatAnthropic(
             model="claude-3-7-sonnet-20250219",
-            api_key=("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"),
+            api_key=os.getenv("ANTHROPIC_API_KEY"),
             stream=False
         )
         self.prompt = ChatPromptTemplate.from_messages([

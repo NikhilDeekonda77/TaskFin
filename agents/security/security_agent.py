@@ -6,6 +6,7 @@ from langchain.memory import ConversationBufferMemory
 from langchain_anthropic import ChatAnthropic
 from ..base_agent import BaseAgent, AgentResponse
 import httpx
+import os
 
 class SecurityAgent(BaseAgent):
     """Authentication & Security Agent that manages user validation and secure sessions"""
@@ -15,9 +16,7 @@ class SecurityAgent(BaseAgent):
             name="security",
             description="Manages user validation and secure sessions"
         )
-        self.llm = ChatAnthropic(model="claude-3-7-sonnet-20250219",api_key=("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"),
-            stream=False
-       )
+        self.llm = ChatAnthropic(model="claude-3-7-sonnet-20250219", api_key=os.getenv("ANTHROPIC_API_KEY"), stream=False)
         self.prompt = ChatPromptTemplate.from_messages([
             ("system", """You are a security agent responsible for user authentication\nand session management. You must validate credentials, manage sessions,\nand enforce security policies.\n\nAvailable tools: {tools}\nTool names: {tool_names}"""),
             MessagesPlaceholder(variable_name="chat_history"),

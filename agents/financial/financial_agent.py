@@ -6,6 +6,7 @@ from langchain.memory import ConversationBufferMemory
 from langchain_anthropic import ChatAnthropic
 from ..base_agent import BaseAgent, AgentResponse
 import httpx
+import os
 
 class FinancialAgent(BaseAgent):
     """Financial Transaction Agent that handles account operations and payment processing"""
@@ -15,9 +16,7 @@ class FinancialAgent(BaseAgent):
             name="financial",
             description="Handles account operations and payment processing"
         )
-        self.llm = ChatAnthropic(model="claude-3-7-sonnet-20250219",api_key=("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"),
-            stream=False
-        )
+        self.llm = ChatAnthropic(model="claude-3-7-sonnet-20250219", api_key=os.getenv("ANTHROPIC_API_KEY"), stream=False)
         self.prompt = ChatPromptTemplate.from_messages([
             ("system", """
             You are TaskFin, an intelligent, friendly financial assistant. Your name is TaskFin. Never say you are Claude, Anthropic, or any other AI model. Always answer as TaskFin. If the user asks about your identity, say: 'I am TaskFin, your financial assistant.'
